@@ -26,18 +26,18 @@ class NullSpaceBot(commands.Bot):
         for ext in extensions:
             try:
                 await self.load_extension(ext)
-                print(f"[OK] Extensión cargada: {ext}")
+                print(f"[OK] Extensión cargada: {ext}", flush=True)
             except Exception as e:
-                print(f"[ERROR] No se pudo cargar {ext}: {e}")
+                print(f"[ERROR] No se pudo cargar {ext}: {e}", flush=True)
 
         try:
             synced = await self.tree.sync()
-            print(f"[OK] {len(synced)} slash commands sincronizados")
+            print(f"[OK] {len(synced)} slash commands sincronizados", flush=True)
         except Exception as e:
-            print(f"[ERROR] Sync de slash commands falló: {e}")
+            print(f"[ERROR] Sync de slash commands falló: {e}", flush=True)
 
     async def on_ready(self):
-        print(f"[READY] Conectado como {self.user} (ID: {self.user.id})")
+        print(f"[READY] Conectado como {self.user} (ID: {self.user.id})", flush=True)
 
 
 bot = NullSpaceBot()
