@@ -226,13 +226,38 @@ class Moderation(commands.Cog):
 
     @commands.command(name="cmds")
     async def cmds(self, ctx: commands.Context):
-        embed = discord.Embed(title="📜 Comandos disponibles", color=0x2F3136)
-        comandos = [
-            "?lock", "?unlock", "?warn", "?delwarn", "?warnings", "?ban",
-            "?tempban", "?unban", "?addnote", "?removenote", "?slowmode",
-            "?userinfo", "?dm", "?mute", "?unmute", "?cmds",
-        ]
-        embed.description = "\n".join(f"`{c}`" for c in comandos)
+        embed = discord.Embed(
+            title=f"{EMOJI_NOTE} Comandos de NullSpaceBOT",
+            description="Prefijo: `?` (no distingue mayúsculas)",
+            color=0x2F3136,
+        )
+        embed.add_field(
+            name="Moderación",
+            value=(
+                "`?lock` `?unlock`\n"
+                "`?ban` `?tempban` `?unban`\n"
+                "`?mute` `?unmute`\n"
+                "`?warn` `?warnings` `?delwarn`\n"
+                "`?addnote` `?removenote`\n"
+                "`?slowmode`"
+            ),
+            inline=True,
+        )
+        embed.add_field(
+            name="Utilidad",
+            value=(
+                "`?dm`\n"
+                "`?userinfo`\n"
+                "`?cmds`"
+            ),
+            inline=True,
+        )
+        embed.add_field(
+            name="Others",
+            value="`/welcome-setup`",
+            inline=False,
+        )
+        embed.set_footer(text="NullSpaceBOT")
         await ctx.send(embed=embed)
 
     # ---------- Manejo de errores local ----------
