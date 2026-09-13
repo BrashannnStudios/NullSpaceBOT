@@ -125,6 +125,18 @@ class ImageModal(discord.ui.Modal, title="Configurar imagen/gif"):
 
     async def on_submit(self, interaction: discord.Interaction):
         value = str(self.url.value).strip() or None
+        if value:
+            valid_ext = (".gif", ".png", ".jpg", ".jpeg", ".webp")
+            url_sin_query = value.split("?")[0].lower()
+            if not url_sin_query.endswith(valid_ext):
+                await interaction.response.send_message(
+                    f"{EMOJI_IMAGE} Esa URL no parece ser un link directo a un archivo "
+                    f"(debe terminar en .gif/.png/.jpg/.webp). Si es de Tenor/Giphy/Imgur, "
+                    f"click derecho sobre el gif/imagen → 'Copiar dirección de la imagen', "
+                    f"no el link de la página.",
+                    ephemeral=True,
+                )
+                return
         self.panel.cfg["image"] = value
         await update_config(interaction.guild.id, {"image": value})
         await interaction.response.edit_message(embed=self.panel.build_panel_embed(), view=self.panel)
