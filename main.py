@@ -47,6 +47,17 @@ bot = NullSpaceBot()
 async def on_message(message: discord.Message):
     if message.author.bot:
         return
+
+    # Si solo lo mencionan al bot (sin nada más, o "@NullSpaceBOT" seguido de texto
+    # que no es un comando), responde con un saludo.
+    if bot.user in message.mentions and not message.mention_everyone:
+        content_sin_mencion = message.content
+        for m in [f"<@{bot.user.id}>", f"<@!{bot.user.id}>"]:
+            content_sin_mencion = content_sin_mencion.replace(m, "").strip()
+        if not content_sin_mencion or not content_sin_mencion.startswith("?"):
+            await message.channel.send(f"Hey {message.author.mention}! ¿Cómo estás? 👋")
+            return
+
     # Normaliza el comando para que ?lock, ?Lock, ?LOCK funcionen igual,
     # sin tocar los argumentos que le sigan.
     if message.content.startswith("?"):
